@@ -72,6 +72,12 @@ func (d *dockerworker) ConfigureRun(run *runner.Run) error {
 	set("provisionerId", workerPoolID[0][:len(workerPoolID[0])-1])
 	set("workerType", workerPoolID[1])
 
+	// default capacity to 1 if it is not set elsewhere
+	_, err = run.WorkerConfig.Get("capacity")
+	if err != nil {
+		set("capacity", 1)
+	}
+
 	return nil
 }
 
